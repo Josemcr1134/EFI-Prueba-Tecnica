@@ -1,0 +1,46 @@
+<header class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/70 bg-slate-950/90 px-4 py-3 backdrop-blur sm:px-6 sm:py-4">
+  <div class="flex items-center gap-3">
+    <button
+      type="button"
+      class="rounded-2xl border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-slate-300 transition hover:border-emerald-400/40 hover:text-emerald-200 lg:hidden"
+      (click)="onToggleMenu()"
+    >
+      Menu
+    </button>
+    <div>
+      <p class="text-xs uppercase tracking-[0.35em] text-emerald-300/70">NovaEdge</p>
+      <h1 class="text-base font-semibold text-white sm:text-lg">Panel de sesiones</h1>
+    </div>
+  </div>
+
+  <div class="relative">
+    <button
+      type="button"
+      class="flex items-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-900/60 px-3 py-2 text-left text-xs text-slate-200 transition hover:border-emerald-400/40 sm:gap-3 sm:px-4 sm:text-sm"
+      (click)="onToggleDropdown()"
+    >
+      <div class="flex h-9 w-9 items-center justify-center rounded-2xl bg-emerald-400/20 text-xs font-semibold text-emerald-200 sm:h-10 sm:w-10 sm:text-sm">
+        {{ userName.charAt(0) | uppercase }}
+      </div>
+      <div class="hidden text-xs text-slate-400 md:block">
+        <p class="text-sm font-semibold text-white">{{ userName }}</p>
+        <p>{{ roleLabel }}</p>
+      </div>
+      <span class="text-xs text-emerald-200">▾</span>
+    </button>
+
+    <div
+      *ngIf="dropdownOpen"
+      class="absolute right-0 mt-3 w-48 rounded-2xl border border-slate-800/70 bg-slate-950/95 p-2 text-sm text-slate-200 shadow-[0_20px_60px_rgba(15,23,42,0.65)]"
+    >
+      <button
+        type="button"
+        class="flex w-full items-center justify-between rounded-xl px-3 py-2 text-left transition hover:bg-amber-500/10 hover:text-amber-200"
+        (click)="onLogout()"
+      >
+        Cerrar sesión
+        <span class="text-xs">↳</span>
+      </button>
+    </div>
+  </div>
+</header>

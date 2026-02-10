@@ -1,0 +1,49 @@
+<div *ngIf="open" class="fixed inset-0 z-50 lg:hidden">
+  <div class="absolute inset-0 bg-slate-950/80" (click)="onClose()"></div>
+  <div class="absolute left-0 top-0 h-full w-72 border-r border-slate-800/70 bg-slate-950/95 p-6">
+    <div class="flex items-center justify-between">
+      <p class="text-xs uppercase tracking-[0.35em] text-emerald-300/70">NovaEdge</p>
+      <button
+        type="button"
+        class="rounded-xl border border-slate-800/70 px-3 py-2 text-xs uppercase tracking-[0.2em] text-slate-300"
+        (click)="onClose()"
+      >
+        Cerrar
+      </button>
+    </div>
+
+    <div class="mt-6 rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4">
+      <p class="text-sm font-semibold text-white">{{ userName }}</p>
+      <p class="text-xs text-slate-400">Sesión activa</p>
+    </div>
+
+    <nav class="mt-8 space-y-2 text-sm">
+      <a
+        routerLink="/dashboard/sessions"
+        (click)="onClose()"
+        class="flex items-center justify-between rounded-2xl border border-transparent px-4 py-3 text-slate-300 transition hover:border-emerald-400/30 hover:text-emerald-200"
+      >
+        Calendario
+        <span class="text-xs text-emerald-300/70">01</span>
+      </a>
+
+      <a
+        *ngIf="isAdmin"
+        routerLink="/dashboard/administration"
+        (click)="onClose()"
+        class="flex items-center justify-between rounded-2xl border border-transparent px-4 py-3 text-slate-300 transition hover:border-amber-400/30 hover:text-amber-200"
+      >
+        Administrador
+        <span class="text-xs text-amber-300/70">ADM</span>
+      </a>
+    </nav>
+
+    <button
+      type="button"
+      class="mt-10 w-full rounded-2xl border border-amber-400/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-200"
+      (click)="onLogout()"
+    >
+      Cerrar sesión
+    </button>
+  </div>
+</div>
