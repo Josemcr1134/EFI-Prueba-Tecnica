@@ -1,20 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { SessionsService } from '../../../../core/sessions/sessions.service';
 import { SessionItem, SessionStatus } from '../../../../core/sessions/session.models';
 import { getStoredSession } from '../../../../core/auth/auth.storage';
 import { SearchableSelectComponent } from '../../../../shared/ui/searchable-select/searchable-select.component';
 
-const categories = [
-  'Estrategia',
-  'Producto',
-  'Tecnología',
-  'Diseño',
-  'Marketing',
-  'Ventas',
-  'Liderazgo'
-];
+const categories = ['Formación', 'Reunión', 'Demo'];
 
 @Component({
   selector: 'app-sessions-admin',
@@ -40,7 +32,7 @@ export class SessionsAdminComponent {
     description: ['', [Validators.required, Validators.minLength(10)]],
     category: ['', [Validators.required]],
     city: ['', [Validators.required, Validators.minLength(2)]],
-    dateTime: ['', [Validators.required]],
+    dateTime: ['', [Validators.required, futureDateValidator]],
     status: ['draft' as SessionStatus, [Validators.required]]
   });
 
@@ -67,6 +59,18 @@ export class SessionsAdminComponent {
 
   onCategoryChange(category: string): void {
     this.form.patchValue({ category });
+  }
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.form.patchValue({ imageUrl: String(reader.result) });
+    };
+    reader.readAsDataURL(file);
   }
 
   startEdit(session: SessionItem): void {
@@ -153,4 +157,12 @@ export class SessionsAdminComponent {
   private refresh(): void {
     this.sessions = this.sessionsService.getSessions();
   }
+}
+
+function futureDateValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+  if (!value) return null;
+  const selected = new Date(value);
+  if (Number.isNaN(selected.getTime())) return { invalidDate: true };
+  return selected.getTime() > Date.now() ? null : { pastDate: true };
 }

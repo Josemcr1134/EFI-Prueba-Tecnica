@@ -27,10 +27,10 @@
           <div class="space-y-2">
             <label class="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">Imagen (opcional)</label>
             <input
-              formControlName="imageUrl"
-              type="url"
-              placeholder="https://"
-              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
+              type="file"
+              accept="image/*"
+              (change)="onImageSelected($event)"
+              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-slate-200 file:mr-4 file:rounded-xl file:border-0 file:bg-amber-400/20 file:px-4 file:py-2 file:text-xs file:uppercase file:tracking-[0.2em] file:text-amber-200"
             />
             <div *ngIf="form.get('imageUrl')?.value" class="mt-3 overflow-hidden rounded-2xl border border-slate-800/80">
               <img [src]="form.get('imageUrl')?.value" alt="Preview" class="h-32 w-full object-cover" />
@@ -93,6 +93,12 @@
                 type="datetime-local"
                 class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white focus:border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
               />
+              <p *ngIf="form.get('dateTime')?.touched && form.get('dateTime')?.hasError('pastDate')" class="text-xs text-amber-300">
+                La fecha debe ser posterior a la actual.
+              </p>
+              <p *ngIf="form.get('dateTime')?.touched && form.get('dateTime')?.hasError('invalidDate')" class="text-xs text-amber-300">
+                Ingresa una fecha válida.
+              </p>
             </div>
           </div>
 
@@ -145,7 +151,7 @@
             <p class="mt-3 text-sm text-slate-400">{{ session.description }}</p>
             <div class="mt-4 flex flex-wrap items-center gap-3 text-xs text-slate-400">
               <span class="rounded-full border border-slate-800/70 px-3 py-1">{{ session.city }}</span>
-              <span class="rounded-full border border-slate-800/70 px-3 py-1">{{ session.dateTime }}</span>
+              <span class="rounded-full border border-slate-800/70 px-3 py-1">{{ session.dateTime | date: 'medium' : 'UTC' }}</span>
             </div>
 
             <div class="mt-5 flex flex-wrap items-center gap-3">
