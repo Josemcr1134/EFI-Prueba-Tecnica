@@ -1,0 +1,104 @@
+<div class="relative min-h-screen overflow-hidden bg-slate-950 text-white">
+  <div class="pointer-events-none absolute inset-0 animate__animated animate__fadeIn">
+    <div class="absolute -left-16 top-12 h-72 w-72 rounded-full bg-lime-400/25 blur-3xl"></div>
+    <div class="absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-sky-400/25 blur-3xl"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.2),_transparent_55%)]"></div>
+  </div>
+
+  <div class="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+    <div class="animate__animated animate__fadeInUp">
+      <div
+        class="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.6)] backdrop-blur">
+        <div class="mb-6">
+          <h2 class="text-2xl font-semibold text-white">Registro NovaEdge</h2>
+          <p class="text-sm text-slate-400">Completa tus datos para activar tu acceso.</p>
+        </div>
+
+        <form class="space-y-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="space-y-2">
+            <label class="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">Nombre completo</label>
+            <input formControlName="fullName" type="text" placeholder="Nombre Apellido"
+              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-lime-300 focus:outline-none focus:ring-2 focus:ring-lime-300/40" />
+            <p *ngIf="form.get('fullName')?.touched && form.get('fullName')?.invalid" class="text-xs text-amber-300">
+              Ingresa tu nombre completo.
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">Correo</label>
+            <input formControlName="email" type="email" placeholder="usuario&#64;empresa.com"
+              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-lime-300 focus:outline-none focus:ring-2 focus:ring-lime-300/40" />
+            <p *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="text-xs text-amber-300">
+              Ingresa un correo válido.
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">Teléfono</label>
+            <input formControlName="phone" type="tel" placeholder="+34 600 000 000"
+              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-lime-300 focus:outline-none focus:ring-2 focus:ring-lime-300/40" />
+            <p *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid" class="text-xs text-amber-300">
+              Ingresa un teléfono válido.
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">Ciudad</label>
+            <input formControlName="city" type="text" placeholder="Madrid"
+              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-lime-300 focus:outline-none focus:ring-2 focus:ring-lime-300/40" />
+            <p *ngIf="form.get('city')?.touched && form.get('city')?.invalid" class="text-xs text-amber-300">
+              Ingresa tu ciudad.
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">Contraseña</label>
+            <input formControlName="password" type="password" placeholder="••••••••"
+              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-lime-300 focus:outline-none focus:ring-2 focus:ring-lime-300/40" />
+            <p *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="text-xs text-amber-300">
+              La contraseña debe tener al menos 6 caracteres.
+            </p>
+          </div>
+
+          <div *ngIf="error"
+            class="rounded-xl border border-amber-400/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+            {{ error }}
+          </div>
+
+          <button type="submit" [disabled]="loading"
+            class="flex w-full items-center justify-center gap-2 rounded-2xl bg-lime-300 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-lime-200 disabled:cursor-not-allowed disabled:opacity-60">
+            <span *ngIf="!loading">Crear cuenta NovaEdge</span>
+            <span *ngIf="loading" class="animate__animated animate__pulse animate__infinite">Guardando...</span>
+          </button>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-slate-400">
+          ¿Ya tienes cuenta?
+          <a routerLink="/auth/login" class="font-semibold text-lime-300 hover:text-lime-200">Inicia sesión</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="space-y-6 animate__animated animate__fadeInUp">
+      <div
+        class="inline-flex items-center gap-2 rounded-full border border-sky-400/40 px-4 py-2 text-xs uppercase tracking-[0.3em] text-sky-200/90">
+        NovaEdge Identity
+      </div>
+      <h1 class="text-4xl font-semibold leading-tight text-white md:text-5xl">
+        Tu acceso NovaEdge define el rol en tiempo real.
+      </h1>
+      <p class="max-w-xl text-base text-slate-300">
+        Si tu correo termina en <span class="text-sky-300">&#64;sdi.es</span> obtendrás perfil de administrador.
+        En cualquier otro dominio, tendrás rol de usuario registrado en NovaEdge.
+      </p>
+      <div class="flex flex-wrap gap-4 text-sm text-slate-300">
+        <div class="rounded-xl border border-slate-700/60 bg-slate-900/60 px-4 py-3">
+          Persistencia de sesión local
+        </div>
+        <div class="rounded-xl border border-slate-700/60 bg-slate-900/60 px-4 py-3">
+          Onboarding en 30 segundos
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

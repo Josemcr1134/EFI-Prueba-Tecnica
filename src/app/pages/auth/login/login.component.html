@@ -1,0 +1,78 @@
+<div class="relative min-h-screen overflow-hidden bg-slate-950 text-white">
+  <div class="pointer-events-none absolute inset-0 animate__animated animate__fadeIn">
+    <div class="absolute -left-20 -top-24 h-72 w-72 rounded-full bg-cyan-500/30 blur-3xl"></div>
+    <div class="absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-amber-400/25 blur-3xl"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.18),_transparent_55%)]"></div>
+  </div>
+
+  <div class="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+    <div class="space-y-6 animate__animated animate__fadeInUp">
+      <div
+        class="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 px-4 py-2 text-xs uppercase tracking-[0.3em] text-emerald-200/90">
+        NovaEdge Access
+      </div>
+      <h1 class="text-4xl font-semibold leading-tight text-white md:text-5xl">
+        NovaEdge, el panel vanguard para gestionar tus sesiones.
+      </h1>
+      <p class="max-w-xl text-base text-slate-300">
+        Autenticación mock con roles inteligentes: dominio <span class="text-emerald-300">"&#64;sdi.es"</span> obtiene
+        acceso de administrador.
+        El resto entra como usuario registrado en NovaEdge.
+      </p>
+      <div class="flex flex-wrap gap-4 text-sm text-slate-300">
+        <div class="rounded-xl border border-slate-700/60 bg-slate-900/60 px-4 py-3">
+          Token simulado persistente
+        </div>
+        <div class="rounded-xl border border-slate-700/60 bg-slate-900/60 px-4 py-3">
+          Redirección directa al Calendario
+        </div>
+      </div>
+    </div>
+
+    <div class="animate__animated animate__fadeInUp">
+      <div
+        class="rounded-3xl border border-slate-700/60 bg-slate-900/70 p-8 shadow-[0_20px_80px_rgba(15,23,42,0.6)] backdrop-blur">
+        <div class="mb-6">
+          <h2 class="text-2xl font-semibold text-white">Ingreso a NovaEdge</h2>
+          <p class="text-sm text-slate-400">Accede con tu correo y contraseña.</p>
+        </div>
+
+        <form class="space-y-5" [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="space-y-2">
+            <label class="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">Correo</label>
+            <input formControlName="email" type="email" placeholder="nombre&#64;empresa.com"
+              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/40" />
+            <p *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="text-xs text-amber-300">
+              Ingresa un correo válido.
+            </p>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-xs font-medium uppercase tracking-[0.25em] text-slate-400">Contraseña</label>
+            <input formControlName="password" type="password" placeholder="••••••••"
+              class="w-full rounded-2xl border border-slate-700/70 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/40" />
+            <p *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="text-xs text-amber-300">
+              La contraseña debe tener al menos 6 caracteres.
+            </p>
+          </div>
+
+          <div *ngIf="error"
+            class="rounded-xl border border-amber-400/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+            {{ error }}
+          </div>
+
+          <button type="submit" [disabled]="loading"
+            class="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-400 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60">
+            <span *ngIf="!loading">Entrar a NovaEdge</span>
+            <span *ngIf="loading" class="animate__animated animate__pulse animate__infinite">Validando...</span>
+          </button>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-slate-400">
+          ¿No tienes cuenta?
+          <a routerLink="/auth/register" class="font-semibold text-emerald-300 hover:text-emerald-200">Crear cuenta</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
